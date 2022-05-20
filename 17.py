@@ -2,84 +2,82 @@
 # Найти произведение элементов на указанных позициях.
 # Позиции хранятся в файле file.txt в одной строке одно число
 
-# import os
-# import random
-# os.system("cls")
+# Первый способ:
 
-# n = int(input())
-# list = [-3, -2, -1, 0, 1, 2, 3]
-# with open('file.txt', 'w')as data:
-#     data.write('1\n')
-#     data.write('2\n')
-#     data.write('3\n')
-#     data.write('4\n')
-#     data.write('5\n')
-#     data.write('6\n')
-#     data.write('7\n')
-
-# #exit()
-# # Чтение файла
-# path = 'file.txt'
+# N = int(input('Введите число: ' + '\n'))
+# list = [i for i in range(-N,N+1)]
+# path = '17.txt'
 # data = open(path,'r')
+# count = 1
 # for line in data:
-#     print(line)
-# print()
-# P = list[0]*list[1]*list[2]*list[4]*list[5]*list[6]
-# print(P)
-# #data.cloes()
-# Второй способ решения
+#    if int(line) > len(list)-1:
+#       count*=1
+# else:
+#      count *= list[int(line)]
+# print(count)
+# data.close()
 
-# dots = int(input('Введите значение для крайних точек: '))
 
-# elements = []
-# mult = 1
-# f = open('File.txt', 'r')
 
-# for i in range (-dots, dots + 1):
-#     elements.append(i)
 
-# print(elements)
+# Второй способ:
 
-# for line in f:
-#     mult = mult * int(elements[int(line)])
+from functools import reduce
+import os
+import random
+os.system("cls")
 
-# print(mult)
-# f.close() 
-# Третий способ:
+n = random.randint(16, 26)
 
-# n=int(input('Введите N (целое число), значение до которрого будет формироваться список: '))
-# pos=input(f'Введите, через запятую, позиции элементов которые необходимо перемножить, не более {n*2}: ').split(',')
+list = [i for i in range(-n, n+1)]
 
-# with open('positions.txt', 'w') as positions:   
-# for i in pos:                                    # считывание списка и запись в файл
-# positions.write(f'{i}\n')                        #
+print('Задан список: ', list, '\n')
 
-# spisok=[]                                       # формируем список 
-# step = 1
-# start = -n
-# stop = n+1
-# if n < 0:
-# step = -1
-# stop -= 2
-# for i in range(start, stop, step):
-# spisok.append(i)
+with open('task017.txt', 'w') as data: # случайным образом задаем позиции и записываем в файл
+   for i in range(int(n/2)):
+       data.write(f'{random.randint(0, n*2)}\n')
 
-# print(spisok)
+def read2list(file): # читает в список из файла
+    with open(file, 'r') as file:
+         position_index = [int(line.strip()) for line in file.readlines()]
+         position_index.sort()
+         print('Выбраны позиции с индексами: \t', *position_index)
+         return position_index
 
-# multiply=1
 
-# with open('positions.txt', 'r') as positions:  # считывание из файла
-# for element in positions:
-# multiply*=spisok[int(element.strip())]
 
-# print(f'Произведение элементов с введенными позициями равно {multiply}')
 
-with open('file.txt','r') as F: 
-    v = []                         # числа из текстового файла записываем в массив
-    for x in F:
-        v.append(int(x))
-    print(v)
-# или так:
-with open('file.txt','r') as F:
-    v = [int(x) for x in F]
-print(v)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+position_index = read2list('task017.txt')
+position_element = [list[i] for i in position_index]
+mult = reduce((lambda x, y: x*y), position_element)
+
+print('Элементы на указанных позициях:\t', *position_element,
+'\nИх произведение равно : \t', mult, '\n')
